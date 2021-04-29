@@ -31,7 +31,11 @@ def initcommands():
 
 # start a discord client
 initcommands()
-client = discord.Client()
+
+intents = discord.Intents.default()
+intents.members = True
+
+client = discord.Client(intents=intents)
 
 #to tell if the bot is ready or not
 @client.event
@@ -51,7 +55,8 @@ async def on_message(message):
   # defining functionality as per channel
   if(message.channel == client.get_channel(836125215393316887)):
     await message.delete()  # for keeping general channel clean
-    await message.channel.send(f"{message.author.mention}, Please keep this channel clean.")
+    if msg != "":
+      await message.channel.send(f"{message.author.mention}, Please keep this channel clean.")
   elif(message.channel == client.get_channel(836162585975586837)):  
     if (msg.startswith("$help")):
       if(msg=="$help"):
@@ -83,10 +88,9 @@ async def send_quotes():
 # when new user joins the server
 @client.event
 async def on_member_join(member):
-  print("here")
-  server = member.server
+  server = "Programming and Gaming"
   channel = client.get_channel(836125215393316887)
-  message = f"Hello {member.mention}, Welcome to {server.name}"
+  message = f"Hello {member.mention}, Welcome to {server}"
   await channel.send(message)
 
 
